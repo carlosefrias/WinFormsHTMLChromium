@@ -17,56 +17,54 @@
 
 
 		 <script type="text/javascript">
-			var chartData = generateChartData();
-			var chart = AmCharts.makeChart("chartdiv", {
-				"type": "serial",
-				"theme": "light",
-				"marginRight": 50,
-				"autoMarginOffset": 20,
-				"marginTop": 7,
-				"pathToImages": "http://www.amcharts.com/lib/3/images/",
-				"dataProvider": chartData,
-				"valueAxes": [{
-					"axisAlpha": 0.2,
-					"dashLength": 1,
-					"position": "left"
-				}],
-				"mouseWheelZoomEnabled": true,
-				"graphs": [{
-					"id": "g1",
-					"balloonText": "[[category]]<br/><b><span style='font-size:14px;'>value: [[value]]</span></b>",
-					"bullet": "round",
-					"bulletBorderAlpha": 1,
-					"bulletColor": "#FFFFFF",
-					"hideBulletsCount": 50,
-					"title": "red line",
-					"valueField": "visits",
-					"useLineColorForBulletBorder": true
-				}],
-				"chartScrollbar": {
-					"autoGridCount": true,
-					"graph": "g1",
-					"scrollbarHeight": 40
-				},
-				"chartCursor": {
+			 const chartData = generateChartData();
+			 const chart = AmCharts.makeChart("chartdiv", {
+				 "type": "serial",
+				 "theme": "light",
+				 "marginRight": 50,
+				 "autoMarginOffset": 20,
+				 "marginTop": 7,
+				 "pathToImages": "http://www.amcharts.com/lib/3/images/",
+				 "dataProvider": chartData,
+				 "valueAxes": [{
+					 "axisAlpha": 0.2,
+					 "dashLength": 1,
+					 "position": "left"
+				 }],
+				 "mouseWheelZoomEnabled": true,
+				 "graphs": [{
+					 "id": "g1",
+					 "balloonText": "[[category]]<br/><b><span style='font-size:14px;'>value: [[value]]</span></b>",
+					 "bullet": "round",
+					 "bulletBorderAlpha": 1,
+					 "bulletColor": "#FFFFFF",
+					 "hideBulletsCount": 50,
+					 "title": "red line",
+					 "valueField": "visits",
+					 "useLineColorForBulletBorder": true
+				 }],
+				 "chartScrollbar": {
+					 "autoGridCount": true,
+					 "graph": "g1",
+					 "scrollbarHeight": 40
+				 },
+				 "chartCursor": {},
+				 "categoryField": "date",
+				 "categoryAxis": {
+					 "parseDates": true,
+					 "axisColor": "#DADADA",
+					 "dashLength": 1,
+					 "minorGridEnabled": true
+				 },
+				 "export": {
+					 "enabled": true,
+					 "libs": {
+						 "path": "http://www.amcharts.com/lib/3/plugins/export/libs/"
+					 }
+				 }
+			 });
 
-				},
-				"categoryField": "date",
-				"categoryAxis": {
-					"parseDates": true,
-					"axisColor": "#DADADA",
-					"dashLength": 1,
-					"minorGridEnabled": true
-				},
-				"export": {
-					"enabled": true,
-					"libs": {
-						"path": "http://www.amcharts.com/lib/3/plugins/export/libs/"
-					}
-				}
-			});
-
-			chart.addListener("rendered", zoomChart);
+			 chart.addListener("rendered", zoomChart);
 			zoomChart();
 
 			// this method is called when chart is first inited as we listen for "dataUpdated" event
@@ -83,18 +81,18 @@
 			    // var data = winformObj.generateChartData();
 			    // return data;
 
-				var chartData = [];
-				var firstDate = new Date();
+				let chartData = [];
+				const firstDate = new Date();
 				firstDate.setDate(firstDate.getDate() - 5);
 
-				for (var i = 0; i < 1000; i++) {
+				for (let i = 0; i < 1000; i++) {
 					// we create date objects here. In your data, you can have date strings
 					// and then set format of your dates using chart.dataDateFormat property,
 					// however when possible, use date objects, as this will speed up chart rendering.
-					var newDate = new Date(firstDate);
+					const newDate = new Date(firstDate);
 					newDate.setDate(newDate.getDate() + i);
 
-					var visits = Math.round(Math.random() * (40 + i / 5)) + 20 + i;
+					const visits = Math.round(Math.random() * (40 + i / 5)) + 20 + i;
 
 					chartData.push({
 						date: newDate,

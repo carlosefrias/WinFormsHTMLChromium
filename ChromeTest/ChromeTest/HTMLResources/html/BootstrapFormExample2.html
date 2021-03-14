@@ -180,8 +180,9 @@ $(document).ready(function() {
                     callback: {
                         message: 'Wrong answer',
                         callback: function(value, validator, $field) {
-                            var items = $('#captchaOperation').html().split(' '), sum = parseInt(items[0]) + parseInt(items[2]);
-                            return value == sum;
+                            const items = $('#captchaOperation').html().split(' '),
+                                sum = parseInt(items[0]) + parseInt(items[2]);
+                            return value === sum;
                         }
                     }
                 }

@@ -45,7 +45,7 @@ namespace ChromeTest
             base.WndProc(ref m);
 
             // Test if the About item was selected from the system menu
-            if ((m.Msg == ChromeDevToolsSystemMenu.WM_SYSCOMMAND) && ((int)m.WParam == ChromeDevToolsSystemMenu.SYSMENU_CHROME_DEV_TOOLS))
+            if ((m.Msg == ChromeDevToolsSystemMenu.WmSysCommand) && ((int)m.WParam == ChromeDevToolsSystemMenu.SYSMENU_CHROME_DEV_TOOLS))
             {
                 m_chromeBrowser.ShowDevTools();
             }

@@ -1,6 +1,6 @@
 ﻿namespace ChromeTest.Demos
 {
-    partial class GenericHTMLForm
+    partial class GenericHtmlForm
     {
         /// <summary>
         /// Required designer variable.
@@ -35,7 +35,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(599, 312);
-            this.Name = "GenericHTMLForm";
+            this.Name = "GenericHtmlForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "GenericHTMLForm";
             this.Load += new System.EventHandler(this.GenericHTMLForm_Load);
