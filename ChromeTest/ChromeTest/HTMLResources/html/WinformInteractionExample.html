@@ -17,7 +17,7 @@
 		<script type="text/javascript">
 			function test1()
 			{
-				const result = winformObj.someFunction();
+				var result = winformObj.someFunction();
 
 				$("p").append( result );
 				
@@ -25,23 +25,23 @@
 			
 			function test2()
 			{
-				const result = winformObj.getPerson();
+				var result = winformObj.getPerson();
 
-				$("p").append( result );
+                $("p").append( result );
 			}
 			
 			function test3()
 			{
-				const result = winformObj.errorFunction();
+				var result = winformObj.errorFunction();
 
-				$("p").append( result );
+                $("p").append( result );
 			}
 			
 			function test4()
 			{
-				const result = winformObj.getListOfPeople();
+				var result = winformObj.getListOfPeople();
 
-				$("p").append( result );
+                $("p").append( result );
 			}
 			
 		</script>

@@ -1,38 +1,45 @@
 ﻿using CefSharp;
 using CefSharp.WinForms;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChromeTest.Demos
 {
     public partial class BootStrapForm2 : Form
     {
-        private ChromiumWebBrowser _mChromeBrowser;
+        ChromiumWebBrowser m_chromeBrowser = null;
 
-        private SomeClass _mJavascriptSvc;
+        SomeClass m_javascriptSvc = null;
 
         public BootStrapForm2()
         {
             InitializeComponent();
-            KeyPreview = true;
+            this.KeyPreview = true;
         }
 
-        private static string GetAppLocation()
+        public static string GetAppLocation()
         {
             return AppDomain.CurrentDomain.BaseDirectory;
         }
 
         private void BootStrapForm2_Load(object sender, EventArgs e)
         {
-            var page = $"{GetAppLocation()}HTMLResources/html/BootstrapFormExample.html";
-            _mChromeBrowser = new ChromiumWebBrowser(page);
-            _mJavascriptSvc = new SomeClass(_mChromeBrowser);
+            string page = string.Format("{0}HTMLResources/html/BootstrapFormExample.html", GetAppLocation());
+            m_chromeBrowser = new ChromiumWebBrowser(page);
+            m_javascriptSvc = new SomeClass(m_chromeBrowser);
 
 
             // Register the JavaScriptInteractionObj class with JS
-            _mChromeBrowser.RegisterJsObject("winformObj", _mJavascriptSvc);
+            m_chromeBrowser.RegisterJsObject("winformObj", m_javascriptSvc);
 
-            Controls.Add(_mChromeBrowser);
+            Controls.Add(m_chromeBrowser);
 
             ChromeDevToolsSystemMenu.CreateSysMenu(this);
         }
@@ -42,9 +49,9 @@ namespace ChromeTest.Demos
             base.WndProc(ref m);
 
             // Test if the About item was selected from the system menu
-            if (m.Msg == ChromeDevToolsSystemMenu.WmSysCommand && ((int)m.WParam == ChromeDevToolsSystemMenu.SYSMENU_CHROME_DEV_TOOLS))
+            if ((m.Msg == ChromeDevToolsSystemMenu.WM_SYSCOMMAND) && ((int)m.WParam == ChromeDevToolsSystemMenu.SYSMENU_CHROME_DEV_TOOLS))
             {
-                _mChromeBrowser.ShowDevTools();
+                m_chromeBrowser.ShowDevTools();
             }
         }
 
@@ -56,7 +63,7 @@ namespace ChromeTest.Demos
         {
             if (e.KeyCode == Keys.F12)
             {
-                _mChromeBrowser.ShowDevTools();
+                m_chromeBrowser.ShowDevTools();
             }
         }
 
@@ -70,11 +77,12 @@ namespace ChromeTest.Demos
     {
         public Person m_theMan = null;
 
-        [JavascriptIgnore] private ChromiumWebBrowser MChromeBrowser { get; }
+        [JavascriptIgnore]
+        public ChromiumWebBrowser m_chromeBrowser { get; set; }
 
-        public SomeClass(ChromiumWebBrowser webBrowser )
+        public SomeClass(ChromiumWebBrowser webBrwsr )
         {
-            MChromeBrowser = webBrowser;
+            m_chromeBrowser = webBrwsr;
         }
 
         public string SomeFunction()
@@ -90,9 +98,10 @@ namespace ChromeTest.Demos
             //var script = "$('#inputEmail').val('a@a.com');";
 
             // var script = "var x = 1234";
-            const string script = "msgBoxFromJavaScript();";
+            var script = "msgBoxFromJavaScript();";
 
-            MChromeBrowser.ExecuteScriptAsync(script);
+            m_chromeBrowser.ExecuteScriptAsync(script);
+
         }
     }
 }

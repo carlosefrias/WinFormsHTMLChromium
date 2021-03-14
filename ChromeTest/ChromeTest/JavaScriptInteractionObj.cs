@@ -3,6 +3,9 @@ using CefSharp.WinForms;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ChromeTest
 {
@@ -15,27 +18,28 @@ public class Person
         DateOfBirth = birthDate;
     }
 
-    private string FirstName { get; }
-    private string LastName { get; }
-    private DateTime DateOfBirth { get; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public DateTime DateOfBirth { get; set; }
     public int SkillLevel { get; set; }
 }
 
     public class JavaScriptInteractionObj
     {
-        private Person _mTheMan = null;
+        public Person m_theMan = null;
 
-        [JavascriptIgnore] private ChromiumWebBrowser MChromeBrowser { get; set; }
+        [JavascriptIgnore]
+        public ChromiumWebBrowser m_chromeBrowser { get; set; }
 
         public JavaScriptInteractionObj()
         {
-            _mTheMan = new Person("Bat", "Man", DateTime.Now);
+            m_theMan = new Person("Bat", "Man", DateTime.Now);
         }
 
         [JavascriptIgnore]
         public void SetChromeBrowser(ChromiumWebBrowser b)
         {
-            MChromeBrowser = b;
+            m_chromeBrowser = b;
         }
 
         public string SomeFunction()
@@ -59,25 +63,24 @@ public class Person
 
         public string GetListOfPeople()
         {
-            var peopleList = new List<Person>
-            {
-                new Person("Scooby", "Doo", DateTime.Now),
-                new Person("Buggs", "Bunny", DateTime.Now),
-                new Person("Daffy", "Duck", DateTime.Now),
-                new Person("Fred", "Flinstone", DateTime.Now),
-                new Person("Iron", "Man", DateTime.Now)
-            };
+            List<Person> peopleList = new List<Person>();
 
-            var json = JsonConvert.SerializeObject(peopleList);
+            peopleList.Add(new Person("Scooby", "Doo", DateTime.Now));
+            peopleList.Add(new Person("Buggs", "Bunny", DateTime.Now));
+            peopleList.Add(new Person("Daffy", "Duck", DateTime.Now));
+            peopleList.Add(new Person("Fred", "Flinstone", DateTime.Now));
+            peopleList.Add(new Person( "Iron", "Man", DateTime.Now));
+
+            string json = JsonConvert.SerializeObject(peopleList);
 
             return json;
         }
 
         public void ExecJSFromWinForms()
         {
-            const string script = "document.body.style.backgroundColor = 'red';";
+            var script = "document.body.style.backgroundColor = 'red';";
 
-            MChromeBrowser.ExecuteScriptAsync(script);
+            m_chromeBrowser.ExecuteScriptAsync(script);
         }
 
         public void TestJSCallback(IJavascriptCallback javascriptCallback)

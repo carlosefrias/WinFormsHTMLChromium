@@ -1,13 +1,20 @@
 ﻿using CefSharp;
 using CefSharp.WinForms;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChromeTest.Demos
 {
     public partial class BootStrapForm : Form
     {
-        private ChromiumWebBrowser _mChromeBrowser;
+        ChromiumWebBrowser m_chromeBrowser = null;
 
         public BootStrapForm()
         {
@@ -18,10 +25,10 @@ namespace ChromeTest.Demos
         {
            // Cef.Initialize();
 
-            var page = $"{GetAppLocation()}HTMLResources/html/BootstrapExample.html";
-            _mChromeBrowser = new ChromiumWebBrowser(page);
+            string page = string.Format("{0}HTMLResources/html/BootstrapExample.html", GetAppLocation());
+            m_chromeBrowser = new ChromiumWebBrowser(page);
 
-            Controls.Add(_mChromeBrowser);
+            Controls.Add(m_chromeBrowser);
 
             ChromeDevToolsSystemMenu.CreateSysMenu(this);
         }
@@ -31,9 +38,9 @@ namespace ChromeTest.Demos
             base.WndProc(ref m);
 
             // Test if the About item was selected from the system menu
-            if (m.Msg == ChromeDevToolsSystemMenu.WmSysCommand && (int)m.WParam == ChromeDevToolsSystemMenu.SYSMENU_CHROME_DEV_TOOLS)
+            if ((m.Msg == ChromeDevToolsSystemMenu.WM_SYSCOMMAND) && ((int)m.WParam == ChromeDevToolsSystemMenu.SYSMENU_CHROME_DEV_TOOLS))
             {
-                _mChromeBrowser.ShowDevTools();
+                m_chromeBrowser.ShowDevTools();
             }
         }
 
@@ -42,7 +49,7 @@ namespace ChromeTest.Demos
             //Cef.Shutdown();
         }
 
-        private static string GetAppLocation()
+        public static string GetAppLocation()
         {
             return AppDomain.CurrentDomain.BaseDirectory;
         }

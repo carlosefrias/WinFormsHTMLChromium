@@ -1,29 +1,30 @@
 ﻿using CefSharp;
 using CefSharp.WinForms;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChromeTest.Demos
 {
-    public partial class GenericHtmlForm : Form
+    public partial class GenericHTMLForm : Form
     {
-        private ChromiumWebBrowser _mChromeBrowser;
+        ChromiumWebBrowser m_chromeBrowser = null;
 
-        private readonly string _mHtmlToDisplay;
+        string m_htmlToDisplay = "";
 
-        public GenericHtmlForm(string formTitle, string htmlToDisplay)
+        public GenericHTMLForm(string formTitle, string htmlToDisplay)
         {
             InitializeComponent();
 
-            Text = formTitle;
+            this.Text = formTitle;
 
-            _mHtmlToDisplay = htmlToDisplay;
-        }
-
-        public sealed override string Text
-        {
-            get => base.Text;
-            set => base.Text = value;
+            m_htmlToDisplay = htmlToDisplay;
         }
 
         public static string GetAppLocation()
@@ -33,9 +34,9 @@ namespace ChromeTest.Demos
 
         private void GenericHTMLForm_Load(object sender, EventArgs e)
         {
-            _mChromeBrowser = new ChromiumWebBrowser(_mHtmlToDisplay);
+            m_chromeBrowser = new ChromiumWebBrowser(m_htmlToDisplay);
 
-            Controls.Add(_mChromeBrowser);
+            Controls.Add(m_chromeBrowser);
 
             ChromeDevToolsSystemMenu.CreateSysMenu(this);
         }
@@ -45,9 +46,9 @@ namespace ChromeTest.Demos
             base.WndProc(ref m);
 
             // Test if the About item was selected from the system menu
-            if (m.Msg == ChromeDevToolsSystemMenu.WmSysCommand && (int)m.WParam == ChromeDevToolsSystemMenu.SYSMENU_CHROME_DEV_TOOLS)
+            if ((m.Msg == ChromeDevToolsSystemMenu.WM_SYSCOMMAND) && ((int)m.WParam == ChromeDevToolsSystemMenu.SYSMENU_CHROME_DEV_TOOLS))
             {
-                _mChromeBrowser.ShowDevTools();
+                m_chromeBrowser.ShowDevTools();
             }
         }
     }
